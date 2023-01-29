@@ -1,0 +1,77 @@
+title: Little Game
+
+basic:
+  num_items: 
+    total: 5
+    init_meat: 1
+    init_bomb: 2
+  level:
+    threshold:
+      - 30
+      - 50
+      - 100
+      - 180
+      - 220
+    speed_scale: 1.25
+    point_scale: 1.5
+  full_score: 150
+
+screen:
+  width: 800
+  height: 400
+  background_color:
+    - 200   # r
+    - 200   # g
+    - 200   # b
+
+scoreboard:
+  text_color:
+    - 30
+    - 30
+    - 30
+  background_color:
+    - 200   # r
+    - 200   # g
+    - 200   # b
+  
+button:
+  start: 
+    img: button.png
+    scale: 0.8
+  restart:
+    img: restart.png
+    scale: 0.2
+  
+
+dog:
+  width: 80
+  height: 80
+  img:
+    - dog1.png
+    - dog2.png
+    - hurt_dog1.png
+    - hurt_dog2.png
+  speed: 1.
+  refresh_rate: 50
+  rotate_speed: 0.8
+  num_rotate: 1.5
+
+item:
+  speed_variation: 1.1
+  delay_variation: 1000
+
+meat:
+  width: 40
+  height: 40
+  img:
+    - meat.png
+  speed: 0.5
+  point: 10
+
+bomb:
+  width: 40
+  height: 40
+  img:
+    - bomb.png
+  speed: 0.5
+  point: -10
