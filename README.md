@@ -2,7 +2,10 @@
 ## Before Playing
 `pip install python`
 
-## How to Play
+## How to Play 
+`python main.py`
+
+### Game Rule
 - Using *Arrow keys* to controll.
 - Eating **meats** gets scores.
 - Touching **bombs** reduces scores.
