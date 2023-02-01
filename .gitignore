@@ -1,3 +1,2 @@
 __pycache__/
-# src/
-# *.png
+*.py[cod]
