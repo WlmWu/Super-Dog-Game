@@ -12,7 +12,7 @@ class Settings():
 
         with open(yamlpath, encoding='UTF-8') as f:
             self.config = yaml.safe_load(f)     
-        sprites = ['dog', 'meat', 'bomb']
+        sprites = ['dog', 'meat', 'bomb', 'cake']
         self.spriteDict = {s: self.config[s] for s in sprites}
         for k, d in self.spriteDict.items():
             self.spriteDict[k]['img'] = [os.path.join(imgpath, i) for i in d['img']]

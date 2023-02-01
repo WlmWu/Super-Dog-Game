@@ -14,7 +14,7 @@ basic:
       - 220
     speed_scale: 1.25
     point_scale: 1.5
-  full_score: 150
+  full_score: 50
 
 screen:
   width: 800
@@ -41,6 +41,9 @@ button:
   restart:
     img: restart.png
     scale: 0.2
+  exit:
+    img: exit.png
+    scale: 0.5
   
 
 dog:
@@ -52,9 +55,16 @@ dog:
     - hurt_dog1.png
     - hurt_dog2.png
   speed: 1.
-  refresh_rate: 50
-  rotate_speed: 0.8
-  num_rotate: 1.5
+  img_refresh_rate: 50
+  animation:
+    rotate_speed: 0.8
+    num_rotate: 1.5
+    num_moving_step: 1000
+    num_jumping: 3
+    gravity:
+      - 0
+      - 0.002
+
 
 item:
   speed_variation: 1.1
@@ -75,3 +85,12 @@ bomb:
     - bomb.png
   speed: 0.5
   point: -10
+
+cake:
+  width: 100
+  height: 100
+  scale: 0.8
+  img:
+    - cake.png
+  speed: 0.1
+  point: 15

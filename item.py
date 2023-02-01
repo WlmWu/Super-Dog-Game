@@ -11,12 +11,13 @@ class Item(Sprite):
         self.settings = settings.spriteDict[self.type]
 
         self.width, self.height = self.settings['width'], self.settings['height']
-        self.image = pygame.image.load(self.settings['img'][0])
+        self.image = pygame.image.load(self.settings['img'][0]).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
-
         self.rect = self.image.get_rect()        
+
         self.originx, self.originy = self.screen.get_rect().midright
         self.originx += self.width
+
         self.originspeed = self.settings['speed']
         self.point = self.settings['point']
         self.delay = 0  # show up delay
@@ -26,25 +27,26 @@ class Item(Sprite):
 
         self.speedup = settings.config['basic']['level']['speed_scale']
 
-        self.reset_pos(status)
-        self.reset(status)
-
-    def reset(self, status):
+        self.game_status = status
+        self.reset_pos()
+        self.reset()   
+    
+    def reset(self, inf = False):
         self.delay = rd.randint(0, self.delayRange) if self.delay == 0 else self.delay - 1
         self.x = self.screen.get_rect().left - self.width
         if self.delay > 0 :
             return
-        self.reset_pos(status)
+        self.reset_pos()
 
-    def reset_pos(self, status):
+    def reset_pos(self):
         self.speed = self.originspeed * rd.uniform(1., self.speedRange)
-        self.levelup(status)
+        self.levelup()
         self.rect.centerx, self.rect.centery = self.originx, rd.uniform(self.height, self.screen.get_rect().height - self.height)
         self.x = float(self.rect.x)
 
-    def update(self, status, item_status = True):
+    def update(self, item_status = True):
         if self.check_edges() or item_status is False:
-            self.reset(status)
+            self.reset()
 
         self.x -= self.speed
         self.rect.x = self.x
@@ -55,13 +57,17 @@ class Item(Sprite):
     def check_edges(self):
         return self.rect.right <= 0
 
-    def levelup(self, status):
-        for i in range(status.level - 1):
+    def levelup(self):
+        for i in range(self.game_status.level - 1):
             self.speed *= self.speedup 
 
     def freeze(self):
         self.x += self.speed
         self.rect.x = self.x
+
+    def hide(self):
+        self.delay = 1000
+        self.reset(inf=True)
 
 class Meat(Item):
     def __init__(self, settings, status, screen, item_type='meat'):
@@ -70,3 +76,23 @@ class Meat(Item):
 class Bomb(Item):
     def __init__(self, settings, status, screen, item_type='bomb'):
         super().__init__(settings, status, screen, item_type)
+
+class Cake(Item):
+    def __init__(self, settings, status, screen, item_type='cake'):
+        super().__init__(settings, status, screen, item_type)
+        self.width, self.height = self.screen.get_rect().height * self.settings['scale'], self.screen.get_rect().height * self.settings['scale']
+        self.image = pygame.image.load(self.settings['img'][0])
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.rect = self.image.get_rect()   
+        self.originx, self.originy = self.screen.get_rect().midright
+        self.originx += self.width 
+        self.reset_pos()    
+    
+    def levelup(self):
+        self.speed = self.originspeed
+
+    def reset_pos(self):
+        super().reset_pos()
+        self.levelup()
+        self.rect.centerx, self.rect.centery = self.originx, self.screen.get_rect().centery
+        self.x = float(self.rect.x)

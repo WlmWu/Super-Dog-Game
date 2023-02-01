@@ -7,7 +7,7 @@ from game_status import GameStatus, GameState
 from button import Button
 from scoreboard import Scoreboard
 from dog import Dog
-from item import Meat, Bomb
+from item import Meat, Bomb, Cake
 
 class Server():
     def __init__(self):
@@ -36,37 +36,59 @@ class Server():
     def start(self):
         self.startbutton = Button(self.settings, self.screen, type='start')
         self.restartbutton = Button(self.settings, self.screen, type='restart')
+        self.exitbutton = Button(self.settings, self.screen, type='exit')
         self.player = Dog(self.settings, self.screen)
         self.generateItems()
 
         while True:
-            if self.status.state is GameState.NOTSTART:
+            if self.status.state is GameState.NOT_START:
                 gf.check_events(self, self.status, button=self.startbutton)
+
             elif self.status.state is GameState.END:
-                gf.check_events(self, self.status, button=self.restartbutton)
+                gf.check_events(self, self.status, button=self.restartbutton, player=self.player)
+
+            elif self.status.state is GameState.WIN:
+                gf.check_events(self, self.status, button=self.exitbutton, player=self.player)
+
             elif self.status.state is GameState.START:
                 gf.check_events(self, self.status, player=self.player)
-                if self.scoreboard.score >= self.settings.config['basic']['full_score']:
-                    self.status.game_end()
-                elif self.scoreboard.score < 0:
+                if self.scoreboard.score >= self.settings.config['basic']['full_score'] and self.status.state:
+                    self.next_stage()
+                elif self.scoreboard.score < 0 or self.player.died:
+                    self.scoreboard.score = -1
                     self.gameover()
-            
+
+            elif self.scoreboard.score == self.settings.config['basic']['full_score']+self.settings.config['cake']['point']:
+                if self.status.state is GameState.NEXT_STAGE:
+                    self.status.state = GameState.FINAL_STAGE
+                self.gamewin()
+                gf.check_events(self, self.status, player=self.player)
+
+            elif self.status.state is GameState.NEXT_STAGE:
+                self.player.next_stage()
+                gf.check_events(self, self.status, player=self.player)
+
             self.update()
     
     def update(self):
         self.screen.fill(self.settings.config['screen']['background_color'])
     
-        if self.status.state == GameState.NOTSTART:
+        if self.status.state == GameState.NOT_START:
             self.startbutton.draw_button()
         elif self.status.state == GameState.END:
             pygame.mouse.set_visible(True)
             self.restartbutton.draw_button()
+        elif self.status.state == GameState.WIN:
+            pygame.mouse.set_visible(True)
+            self.exitbutton.draw_button()
+            self.player.update()
+            self.player.blitme()
         else:
             self.player.update()
-            gf.checkItemsCollide(self.items, self.status)
+            gf.checkItemsCollide(self.items)
             for i in self.items:
                 i.update(self.status)
-                gf.checkGetPoint(self.player, i, self.scoreboard, self.status)
+                gf.checkGetPoint(self.player, i, self.scoreboard)
             self.scoreboard.showScore()
             for i in self.items:
                 i.blitme()
@@ -78,7 +100,7 @@ class Server():
     def gameover(self):
         for i in self.items:
             i.freeze()
-        if self.player.died():
+        if self.player.dying():
             time.sleep(1)
             self.status.game_end()
 
@@ -89,7 +111,28 @@ class Server():
             i.kill()
         self.generateItems()
 
+    def next_stage(self):
+        self.status.state = GameState.NEXT_STAGE
+        for i in self.items:
+            i.hide()
+            i.kill()
+        self.items = [Cake(self.settings, self.status, self.screen)]
+
+    def gamewin(self):
+        for i in self.items:
+            i.hide()
+            i.kill()
+        self.items = []
+
+        if self.status.state is GameState.FINAL_STAGE and self.player.drop_animation():
+            self.status.state = GameState.FINISH
+            time.sleep(0.5)
+            
+        elif self.status.state is GameState.FINISH and self.player.jump_animation():
+            time.sleep(0.5)
+            self.player.win()
+            self.status.game_end(win=True)
+
 if __name__ == '__main__':
-    # main()
     svr = Server()
     svr.start()

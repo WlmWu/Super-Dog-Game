@@ -1,8 +1,12 @@
 from enum import Enum
-class GameState():
-    NOTSTART = 0
+class GameState(Enum):
+    NOT_START = 0
     START = 1
     END = 2
+    NEXT_STAGE = 3
+    FINAL_STAGE = 4
+    FINISH = 5
+    WIN = 6
 
 class GameStatus():
     def __init__(self, settings):
@@ -12,7 +16,7 @@ class GameStatus():
     def reset_status(self):
         self.score = 0
         self.level = 1
-        self.state = GameState.NOTSTART
+        self.state = GameState.NOT_START
 
     def update_level(self, score):
         self.level = 1
@@ -22,5 +26,5 @@ class GameStatus():
     def game_start(self):
         self.state = GameState.START
     
-    def game_end(self):
-        self.state = GameState.END
+    def game_end(self, win=False):
+        self.state = GameState.END if not win else GameState.WIN
