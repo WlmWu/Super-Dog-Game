@@ -1,6 +1,6 @@
 # My Pygame
 ## Before Playing
-`pip install python`
+`pip install pygame`
 
 ## How to Play 
 `python main.py`
