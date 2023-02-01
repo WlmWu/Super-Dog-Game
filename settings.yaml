@@ -14,7 +14,7 @@ basic:
       - 220
     speed_scale: 1.25
     point_scale: 1.5
-  full_score: 50
+  full_score: 300
 
 screen:
   width: 800

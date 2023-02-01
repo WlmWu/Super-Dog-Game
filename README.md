@@ -1,9 +1,9 @@
 # My Pygame
 ## Before Playing
-`pip install pygame`
+`pip3 install -r requirements.txt`
 
 ## How to Play 
-`python main.py`
+`python3 main.py`
 
 ### Game Rule
 - Using *Arrow keys* to controll.
