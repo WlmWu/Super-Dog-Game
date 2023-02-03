@@ -8,6 +8,7 @@ from button import Button
 from scoreboard import Scoreboard
 from dog import Dog
 from item import Meat, Bomb, Cake
+from word_typing import TypingSimulator
 
 class Server():
     def __init__(self):
@@ -134,6 +135,7 @@ class Server():
         elif self.status.state is GameState.FINISH and self.player.jump_animation():
             time.sleep(0.5)
             self.player.win()
+            TypingSimulator(output=self.settings.config['basic']['typing']['message'], speed=self.settings.config['basic']['typing']['speed']).typingAtExit()
             self.status.game_end(win=True)
 
 if __name__ == '__main__':

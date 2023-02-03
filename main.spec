@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['main.py', 'button.py', 'dog.py', 'game_functions.py', 'game_status.py', 'item.py', 'scoreboard.py', 'settings.py'],
+    ['main.py', 'button.py', 'dog.py', 'game_functions.py', 'game_status.py', 'item.py', 'scoreboard.py', 'settings.py', 'word_typing.py'],
     pathex=[],
     binaries=[('src', 'src')],
     datas=[('*.yaml', '.')],

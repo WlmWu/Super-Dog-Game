@@ -16,6 +16,10 @@ basic:
     speed_scale: 1.25
     point_scale: 1.5
   full_score: 300
+  typing:
+    message: Congrats!! See you next time!
+    speed: 0.2
+    
 
 screen:
   width: 800
@@ -37,14 +41,14 @@ scoreboard:
   
 button:
   start: 
-    img: button.png
+    img: start.png
     scale: 0.8
   restart:
     img: restart.png
     scale: 0.2
   exit:
     img: exit.png
-    scale: 0.5
+    scale: 0.8
   
 
 dog:
