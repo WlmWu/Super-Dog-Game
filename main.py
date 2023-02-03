@@ -39,6 +39,8 @@ class Server():
         self.exitbutton = Button(self.settings, self.screen, type='exit')
         self.player = Dog(self.settings, self.screen)
         self.generateItems()
+        fclk = pygame.time.Clock()
+        fps = self.settings.config['basic']['fps']
 
         while True:
             if self.status.state is GameState.NOT_START:
@@ -69,6 +71,7 @@ class Server():
                 gf.check_events(self, self.status, player=self.player)
 
             self.update()
+            fclk.tick(fps)
     
     def update(self):
         self.screen.fill(self.settings.config['screen']['background_color'])

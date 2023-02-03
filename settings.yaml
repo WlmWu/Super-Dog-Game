@@ -1,6 +1,7 @@
 title: Little Game
 
 basic:
+  fps: 800
   num_items: 
     total: 5
     init_meat: 1
