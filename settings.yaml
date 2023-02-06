@@ -1,7 +1,7 @@
 title: Little Game
 
 basic:
-  fps: 800
+  fps: 8000
   num_items: 
     total: 5
     init_meat: 1
@@ -59,16 +59,16 @@ dog:
     - dog2.png
     - hurt_dog1.png
     - hurt_dog2.png
-  speed: 1.
-  img_refresh_rate: 50
+  speed: 0.1
+  img_refresh_rate: 500
   animation:
-    rotate_speed: 0.8
+    rotate_speed: 0.18
     num_rotate: 1.5
-    num_moving_step: 1000
+    num_moving_step: 8000
     num_jumping: 3
     gravity:
       - 0
-      - 0.002
+      - 0.0001
 
 
 item:
@@ -80,7 +80,7 @@ meat:
   height: 40
   img:
     - meat.png
-  speed: 0.5
+  speed: 0.05
   point: 10
 
 bomb:
@@ -88,7 +88,7 @@ bomb:
   height: 40
   img:
     - bomb.png
-  speed: 0.5
+  speed: 0.05
   point: -10
 
 cake:
@@ -97,5 +97,5 @@ cake:
   scale: 0.8
   img:
     - cake.png
-  speed: 0.1
+  speed: 0.02
   point: 15

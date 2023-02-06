@@ -55,7 +55,7 @@ class Server():
 
             elif self.status.state is GameState.START:
                 gf.check_events(self, self.status, player=self.player)
-                if self.scoreboard.score >= self.settings.config['basic']['full_score'] and self.status.state:
+                if self.scoreboard.score >= self.settings.config['basic']['full_score']:
                     self.next_stage()
                 elif self.scoreboard.score < 0 or self.player.died:
                     self.scoreboard.score = -1

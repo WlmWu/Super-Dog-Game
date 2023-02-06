@@ -11,9 +11,7 @@ class Item(Sprite):
         self.settings = settings.spriteDict[self.type]
 
         self.width, self.height = self.settings['width'], self.settings['height']
-        self.image = pygame.image.load(self.settings['img'][0]).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
-        self.rect = self.image.get_rect()        
+        self.loadimg()      
 
         self.originx, self.originy = self.screen.get_rect().midright
         self.originx += self.width
@@ -30,6 +28,11 @@ class Item(Sprite):
         self.game_status = status
         self.reset_pos()
         self.reset()   
+
+    def loadimg(self):
+        self.image = pygame.image.load(self.settings['img'][0]).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.rect = self.image.get_rect()  
     
     def reset(self, inf = False):
         self.delay = rd.randint(0, self.delayRange) if self.delay == 0 else self.delay - 1
@@ -80,19 +83,14 @@ class Bomb(Item):
 class Cake(Item):
     def __init__(self, settings, status, screen, item_type='cake'):
         super().__init__(settings, status, screen, item_type)
+ 
+    def loadimg(self):
         self.width, self.height = self.screen.get_rect().height * self.settings['scale'], self.screen.get_rect().height * self.settings['scale']
-        self.image = pygame.image.load(self.settings['img'][0])
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
-        self.rect = self.image.get_rect()   
-        self.originx, self.originy = self.screen.get_rect().midright
-        self.originx += self.width 
-        self.reset_pos()    
+        super().loadimg() 
     
     def levelup(self):
         self.speed = self.originspeed
 
     def reset_pos(self):
         super().reset_pos()
-        self.levelup()
-        self.rect.centerx, self.rect.centery = self.originx, self.screen.get_rect().centery
-        self.x = float(self.rect.x)
+        self.rect.centery = self.screen.get_rect().centery

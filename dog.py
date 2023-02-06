@@ -126,7 +126,7 @@ class Dog(Sprite):
             lenA = (self.accelaration[0]**2 + self.accelaration[1]**2)**0.5
             deltaS = ((self.endpoint[0]-self.startpoint[0])**2 + (self.endpoint[1]-self.startpoint[1])**2)**0.5
             totaltime = self.settings['animation']['num_moving_step'] if not accelaration else (deltaS/lenA)**0.5
-            self.velocity0 = (2 * self.accelaration[0] * (self.endpoint[0]-self.startpoint[0]), 2 * self.accelaration[1]*(self.endpoint[1]-self.startpoint[1])) if accelaration else ((self.endpoint[0]-self.startpoint[0])/totaltime, (self.endpoint[1]-self.startpoint[1])/totaltime)
+            self.velocity0 = ((2 * self.accelaration[0] * (self.endpoint[0]-self.startpoint[0]))**0.5, (2 * self.accelaration[1]*(self.endpoint[1]-self.startpoint[1]))**0.5) if accelaration else ((self.endpoint[0]-self.startpoint[0])/totaltime, (self.endpoint[1]-self.startpoint[1])/totaltime)
             self.time = 0
             # print(self.velocity0, self.accelaration)
 
@@ -147,7 +147,7 @@ class Dog(Sprite):
             self.moving_animation(startpoint=startpoint, endpoint=endpoint, setup=True, accelaration=False)
             self.stage = Stage.MOVING_MIDLEFT
 
-        if (self.rect.centerx > self.endpoint[0] or (self.rect.centerx == self.endpoint[0] and self.rect.bottom - self.endpoint[1])) and self.stage == Stage.MOVING_MIDLEFT:
+        if (self.rect.centerx > self.endpoint[0] or (self.rect.centerx == self.endpoint[0] and abs(self.rect.bottom - self.endpoint[1]) > 10)) and self.stage == Stage.MOVING_MIDLEFT:
             self.moving_animation()
 
         if self.rect.centerx <= self.endpoint[0] and self.rect.bottom == self.endpoint[1]:

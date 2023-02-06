@@ -1,6 +1,5 @@
 import time
 import random as rd
-from pynput.keyboard import Controller
 import atexit
 
 class TypingSimulator():
@@ -13,11 +12,12 @@ class TypingSimulator():
         self.typing_string()
 
     def typing_string(self):
-        keyboard = Controller()
         for c in self.output:
-            keyboard.type(c)
+            # print(c, end='')
+            print(c)
             delay = rd.uniform(0.01, self.speed)
             time.sleep(delay)
+        time.sleep(3)
     
     def typingAtExit(self):
         atexit.register(self.exit_event)
