@@ -4,7 +4,7 @@ basic:
   fps: 8000
   num_items: 
     total: 5
-    init_meat: 1
+    init_meat: 2
     init_bomb: 2
   level:
     threshold:
@@ -15,7 +15,7 @@ basic:
       - 220
     speed_scale: 1.25
     point_scale: 1.5
-  full_score: 300
+  full_score: 50
   typing:
     message: Congrats!! See you next time!
     speed: 0.2

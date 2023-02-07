@@ -140,6 +140,7 @@ class Dog(Sprite):
 
 
     def next_stage(self):
+        ERROR = 0
         if self.stage == Stage.EATTING_MEAT:
             startpoint = (self.rect.centerx, self.rect.bottom)
             endpoint = (self.rect.width/2, self.screen_rect.midleft[1]+self.rect.height/2)
@@ -147,11 +148,12 @@ class Dog(Sprite):
             self.moving_animation(startpoint=startpoint, endpoint=endpoint, setup=True, accelaration=False)
             self.stage = Stage.MOVING_MIDLEFT
 
-        if (self.rect.centerx > self.endpoint[0] or (self.rect.centerx == self.endpoint[0] and abs(self.rect.bottom - self.endpoint[1]) > 10)) and self.stage == Stage.MOVING_MIDLEFT:
+        if abs(self.rect.centerx - self.endpoint[0]) <= ERROR+1 and abs(self.rect.bottom - self.endpoint[1]) <= ERROR+1:
+            self.stage = Stage.EATTING_CAKE
+
+        if (abs(self.rect.centerx - self.endpoint[0]) > ERROR or (self.rect.centerx == self.endpoint[0] and abs(self.rect.bottom - self.endpoint[1]) > ERROR)) and self.stage == Stage.MOVING_MIDLEFT:
             self.moving_animation()
 
-        if self.rect.centerx <= self.endpoint[0] and self.rect.bottom == self.endpoint[1]:
-            self.stage = Stage.EATTING_CAKE
 
     def drop_animation(self):
         if self.stage == Stage.EATTING_CAKE:
