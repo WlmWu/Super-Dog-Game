@@ -1,6 +1,8 @@
 import time
 import random as rd
 import atexit
+from tkinter import *
+from tkinter import messagebox
 
 class TypingSimulator():
     def __init__(self, output='Bye Bye ~ ~ ~', speed=0.2) -> None:
@@ -8,6 +10,7 @@ class TypingSimulator():
         self.speed = speed
 
     def exit_event(self):
+        self.popupWindow()
         input('Please press enter here...')
         self.typing_string()
 
@@ -21,3 +24,7 @@ class TypingSimulator():
     
     def typingAtExit(self):
         atexit.register(self.exit_event)
+
+    def popupWindow(self):
+        Tk().wm_withdraw()
+        messagebox.showinfo('Continue', 'Go to CLI window to continue')
