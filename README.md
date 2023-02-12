@@ -1,9 +1,9 @@
 # My Pygame
 ## Before Playing
-`pip3 install -r requirements.txt`
+    pip3 install -r requirements.txt
 
 ## How to Play 
-`python3 main.py`
+    python3 main.py
 
 ### Game Rule
 - Using *Arrow Keys* to controll.
@@ -15,11 +15,11 @@
 ## Pack It into an Executable File
 
 ### Before Packing
-`pip3 install pyinstaller`
+    pip3 install pyinstaller
 
 ### How to Pack
-`pyinstaller main.spec`
+    pyinstaller main.spec
 
 ### Where to Find the Executable File
-`.\dist\main\main.exe`
+    .\dist\main\main.exe
 
